@@ -6,7 +6,7 @@ export default class ReviewsController {
         // TODO:
 
         try {
-            const movieId = req.body.movie_id 
+            const nftId = req.body.nft_id 
             const review = req.body.review 
             const userInfo = {
                 name : req.body.name,
@@ -16,7 +16,7 @@ export default class ReviewsController {
             const date = new Date()
 
             const reviewResponse = await ReviewsDAO.addReview(
-                movieId, 
+                nftId, 
                 userInfo, 
                 review, 
                 date
@@ -39,7 +39,6 @@ export default class ReviewsController {
 
     static async apiUpdateReview(req, res, next) {
         // TODO:
-
         try {
             const reviewId = req.body._id
             const review = req.body.review 
@@ -56,16 +55,13 @@ export default class ReviewsController {
                 review, 
                 date
             )
-
             let {error} = reviewResponse 
             console.log(error)
-
             if (error) {
                 res.status(500).json( { error : "Unable to post review" } )
             } else {
                 res.json( { status : "success" } )
             }
-
         } catch(e) {
             res.status(500).json( { error : e.message } )
         }

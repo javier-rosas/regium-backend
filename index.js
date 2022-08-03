@@ -1,7 +1,7 @@
 import app from './server.js'
 import mongodb from 'mongodb'
 import dotenv from 'dotenv'
-import MoviesDAO from './dao/moviesDAO.js'
+import NftsDAO from './dao/nftsDAO.js'
 import ReviewsDAO from './dao/reviewsDAO.js'
 import FavoritesDAO from './dao/favoritesDAO.js'
 
@@ -11,7 +11,7 @@ async function main(){
     dotenv.config()
 
     const client = new mongodb.MongoClient(
-        process.env.MOVIEREVIEWS_DB_URI
+        process.env.NFTS_DB_URI
     )
 
     const port = process.env.PORT || 8000 
@@ -19,7 +19,7 @@ async function main(){
     try {
         // connect to the mongodb server 
         await client.connect()
-        await MoviesDAO.injectDB(client)
+        await NftsDAO.injectDB(client)
         await ReviewsDAO.injectDB(client)
         await FavoritesDAO.injectDB(client)
 
