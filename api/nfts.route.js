@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.route("/").get( NftsController.apiGetNfts )
-router.route("/id/:id").get( NftsController.apiGetNftById )
+router.route("/:id").get( NftsController.apiGetNftById )
 router.route("/descriptions").get( NftsController.apiGetDescriptions )
 
 router.route("/review").post( ReviewsController.apiPostReview )
