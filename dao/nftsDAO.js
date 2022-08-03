@@ -53,7 +53,7 @@ export default class NftsDAO {
 
         let descriptions = []
         try {
-            descriptions = await nfts.distinct("rated")
+            descriptions = await nfts.distinct("description")
             return descriptions
         } catch(e) {
             console.log(`Unable to get ratings, ${e}`)
