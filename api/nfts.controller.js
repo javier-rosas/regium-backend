@@ -9,8 +9,8 @@ export default class NftsController {
 
         let filters = {}
 
-        if (req.query.description) {
-            filters.description = req.query.description 
+        if (req.query.genre) {
+            filters.genre = req.query.genre 
         } else if (req.query.name){
             filters.name = req.query.name
         }
@@ -46,15 +46,13 @@ export default class NftsController {
         }
     }
 
-    static async apiGetDescriptions(req, res, next){
-
+    static async apiGetGenres(req, res, next){
         try {
-            let nftDescriptions = await NftsDAO.getDescriptions()
-            res.json(nftDescriptions)
+            let nftGenres = await NftsDAO.getGenres()
+            res.json(nftGenres)
         } catch(e) {
             console.log(`API, ${e}`)
             res.status(500).json( {error : e} )
         }
     }
-
 }

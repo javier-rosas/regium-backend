@@ -26,8 +26,9 @@ export default class NftsDAO {
         if (filters) {
             if ("name" in filters) {
                 query = { $text: { $search: filters['name'] } }
-            } else if ("description" in filters){
-                query = { "description": { $eq : filters['description'] } }
+            }
+            if ("genre" in filters) {
+                query = { "genre": { $eq : filters['genre'] } }
             }
         }
 
@@ -49,15 +50,15 @@ export default class NftsDAO {
 
     }
 
-    static async getDescriptions(){
+    static async getGenres(){
 
-        let descriptions = []
+        let genres = []
         try {
-            descriptions = await nfts.distinct("description")
-            return descriptions
+            genres = await nfts.distinct("genre")
+            return genres
         } catch(e) {
             console.log(`Unable to get ratings, ${e}`)
-            return descriptions
+            return genres
         }
 
     }
