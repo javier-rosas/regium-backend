@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import NftsDAO from './dao/nftsDAO.js'
 import ReviewsDAO from './dao/reviewsDAO.js'
 import FavoritesDAO from './dao/favoritesDAO.js'
-
+import UsersDAO from './dao/usersDAO.js'
 
 async function main(){
 
@@ -22,6 +22,7 @@ async function main(){
         await NftsDAO.injectDB(client)
         await ReviewsDAO.injectDB(client)
         await FavoritesDAO.injectDB(client)
+        await UsersDAO.injectDB(client)
 
         app.listen(port, () => {
             console.log("Server is running on port:", port)
