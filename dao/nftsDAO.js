@@ -111,4 +111,17 @@ export default class NftsDAO {
       return { error: e };
     }
   }
+
+  static async getRandomNfts(num) {
+    try {
+      // Get one random document from the nfts collection
+      const response = await nfts
+        .aggregate([{ $sample: { size: Number(num) } }])
+        .toArray();
+      return response;
+    } catch (e) {
+      console.log(`Unable to get random nfts: ${e}`);
+      return { error: e };
+    }
+  }
 }

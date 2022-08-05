@@ -86,4 +86,18 @@ export default class NftsController {
       res.status(500).json({ error: e });
     }
   }
+
+  static async apiGetRandomNfts(req, res, next) {
+    try {
+      let nfts = await NftsDAO.getRandomNfts(req.query.num);
+      if (!nfts) {
+        res.status(404).json({ error: "not found" });
+        return;
+      }
+      res.json(nfts);
+    } catch (e) {
+      console.log(`API, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
 }

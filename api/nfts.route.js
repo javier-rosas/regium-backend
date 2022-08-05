@@ -11,6 +11,7 @@ router.route("/id/:id").get(NftsController.apiGetNftById);
 router.route("/genres").get(NftsController.apiGetGenres);
 router.route("/likes").put(NftsController.apiUpdateLikes);
 router.route("/most-liked").get(NftsController.apiGetMostLikedNfts);
+router.route("/random").get(NftsController.apiGetRandomNfts);
 
 router.route("/review").post(ReviewsController.apiPostReview);
 router.route("/review").put(ReviewsController.apiUpdateReview);
