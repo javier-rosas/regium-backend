@@ -1,58 +1,89 @@
-import NftsDAO from "../dao/nftsDAO.js"
+import NftsDAO from "../dao/nftsDAO.js";
 
 export default class NftsController {
+  static async apiGetNfts(req, res, next) {
+    const nftsPerPage = req.query.nftsPerPage
+      ? parseInt(req.query.nftsPerPage)
+      : 20;
+    const page = req.query.page ? parseInt(req.query.page) : 0;
 
-    static async apiGetNfts(req, res, next){
-        
-        const nftsPerPage = req.query.nftsPerPage ? parseInt(req.query.nftsPerPage) : 20
-        const page = req.query.page ? parseInt(req.query.page) : 0
+    let filters = {};
 
-        let filters = {}
-
-        if (req.query.genre) {
-            filters.genre = req.query.genre 
-        } else if (req.query.name){
-            filters.name = req.query.name
-        }
-
-        const { nftsList, totalNumNfts } = await 
-            NftsDAO.getNfts({ filters, page, nftsPerPage })
-
-        let response = {
-            nfts : nftsList,
-            page : page,
-            filters : filters,
-            entries_per_page : nftsPerPage, 
-            total_results : totalNumNfts
-        }
-
-        res.json( response )
-
+    if (req.query.genre) {
+      filters.genre = req.query.genre;
+    } else if (req.query.name) {
+      filters.name = req.query.name;
     }
 
-    static async apiGetNftById(req, res, next){
+    const { nftsList, totalNumNfts } = await NftsDAO.getNfts({
+      filters,
+      page,
+      nftsPerPage,
+    });
 
-        try {
-            let id = req.params.id || {}
-            let nft = await NftsDAO.getNftById(id)
-            if (!nft) {                
-                res.status(404).json({ error : "not found" })
-                return
-            }
-            res.json(nft)
-        } catch(e) {
-            console.log(`API, ${e}`)
-            res.status(500).json( {error : e} )
-        }
-    }
+    let response = {
+      nfts: nftsList,
+      page: page,
+      filters: filters,
+      entries_per_page: nftsPerPage,
+      total_results: totalNumNfts,
+    };
 
-    static async apiGetGenres(req, res, next){
-        try {
-            let nftGenres = await NftsDAO.getGenres()
-            res.json(nftGenres)
-        } catch(e) {
-            console.log(`API, ${e}`)
-            res.status(500).json( {error : e} )
-        }
+    res.json(response);
+  }
+
+  static async apiGetNftById(req, res, next) {
+    try {
+      let id = req.params.id || {};
+      let nft = await NftsDAO.getNftById(id);
+      if (!nft) {
+        res.status(404).json({ error: "not found" });
+        return;
+      }
+      res.json(nft);
+    } catch (e) {
+      console.log(`API, ${e}`);
+      res.status(500).json({ error: e });
     }
+  }
+
+  static async apiGetGenres(req, res, next) {
+    try {
+      let nftGenres = await NftsDAO.getGenres();
+      res.json(nftGenres);
+    } catch (e) {
+      console.log(`API, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
+
+  static async apiUpdateLikes(req, res, next) {
+    try {
+      const LikesResponse = await NftsDAO.updateLikes(
+        req.body._id,
+        req.body.increaseFlag
+      );
+      let { error } = LikesResponse;
+      if (error) {
+        res.status(500).json({ error });
+      }
+      res.json({ status: "Success" });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+
+  static async apiGetMostLikedNfts(req, res, next) {
+    try {
+      let nfts = await NftsDAO.getMostLikedNfts();
+      if (!nfts) {
+        res.status(404).json({ error: "not found" });
+        return;
+      }
+      res.json(nfts);
+    } catch (e) {
+      console.log(`API, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
 }
