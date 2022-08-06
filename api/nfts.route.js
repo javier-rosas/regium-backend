@@ -4,6 +4,7 @@ import ReviewsController from './reviews.controller.js'
 import FavoritesController from './favorites.controller.js'
 import UsersController from './users.controller.js'
 
+
 const router = express.Router()
 
 
@@ -20,5 +21,6 @@ router.route("/favorites/:userId").get(FavoritesController.apiGetFavorites)
 
 router.route("/user/:userId").get( UsersController.apiGetUserNfts )
 router.route("/user").put( UsersController.apiUpdateUser )
+
 
 export default router
