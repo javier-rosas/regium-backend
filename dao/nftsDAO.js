@@ -49,7 +49,7 @@ export default class NftsDAO {
       genres = await nfts.distinct("genre");
       return genres;
     } catch (e) {
-      console.log(`Unable to get ratings, ${e}`);
+      console.log(`Unable to get genres, ${e}`);
       return genres;
     }
   }
