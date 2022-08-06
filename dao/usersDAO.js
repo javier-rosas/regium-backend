@@ -42,4 +42,18 @@ export default class UsersDAO {
     }
   }
 
+  static async getUserNfts(userId) {
+    let cursor
+    try {
+      cursor = await userDB.find({ _id : userId }, { projection: { _id: 0, nfts_owned: 1 } })
+      const nftIds = await cursor.toArray()
+      return nftIds[0].nfts_owned
+    } catch (e) {
+      console.error(`Something went wrong in getUserNfts: ${e}`)
+      throw e
+    }
+  }
+
+
+  // db.collection.find( { _id : { $in : [1,2,3,4] } } );
 }
