@@ -102,7 +102,7 @@ export default class NftsDAO {
           // First sort all the docs by name
           { $sort: { likes: -1 } },
           // Take the first 15 of those
-          { $limit: 15 },
+          { $limit: 12 },
         ])
         .toArray();
       return getResponse;
