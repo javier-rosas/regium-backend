@@ -92,7 +92,9 @@ https://github.ccs.neu.edu/NEU-CS5610-SU22/Distributed-UniqFrontend
 This code is incomplete right now but will be finalized before iteration 3.
 
 In this iteration we have made the following progress to the Distributed Uniq repository:
+
 <img width="579" alt="nftmo" src="https://media.github.ccs.neu.edu/user/10195/files/8b761052-4c9a-466e-872c-108bbc2d561d">
+
 This class stores the code for an individual nft
 
 <img width="633" alt="nft_card" src="https://media.github.ccs.neu.edu/user/10195/files/77e9dcc0-e9c5-48ff-8c0c-0db35de7fd71">
@@ -103,7 +105,7 @@ The above shows how the nft can be accessed from the react jsx files
 
 The above image shows the structure of the new Distributed Uniq repository
 
-<img width="648" alt="mint" src=<img width="116" alt="new_structure" src="https://media.github.ccs.neu.edu/user/10195/files/c354d2fa-1e97-468c-8d60-fcc534f3f4b0">
+<img width="648" alt="mint" src="https://media.github.ccs.neu.edu/user/10195/files/ff0ccc2d-f712-46d4-abc7-1af50ddb63a1">
 
 The above file shows the code for how we can mint a new nft
 
