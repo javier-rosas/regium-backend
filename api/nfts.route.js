@@ -20,8 +20,9 @@ router.route("/review").delete(ReviewsController.apiDeleteReview);
 router.route("/favorites").put(FavoritesController.apiUpdateFavorites);
 router.route("/favorites/:userId").get(FavoritesController.apiGetFavorites);
 
-router.route("/user/:userId").get(UsersController.apiGetUserNfts);
+router.route("/user/:userId").get(UsersController.apiGetUser);
 router.route("/user").put(UsersController.apiUpdateUser);
+
 
 router.route("/mint").post(NftsController.apiMintNft);
 

@@ -1,4 +1,4 @@
-import mongodb from "mongodb"
+import mongodb, { CURSOR_FLAGS } from "mongodb"
 const objectId = mongodb.ObjectId
 
 let userDB; 
@@ -42,18 +42,17 @@ export default class UsersDAO {
     }
   }
 
-  static async getUserNfts(userId) {
+  static async getUser(userId) {
     let cursor
     try {
-      cursor = await userDB.find({ _id : userId }, { projection: { _id: 0, nfts_owned: 1 } })
-      const nftIds = await cursor.toArray()
-      return nftIds[0].nfts_owned
+      cursor = await userDB.find({ _id : userId })//, { projection: { _id: 0, nfts_owned: 1 } })
+      const user = await cursor.toArray()
+      return user
     } catch (e) {
       console.error(`Something went wrong in getUserNfts: ${e}`)
       throw e
     }
   }
-
 
   // db.collection.find( { _id : { $in : [1,2,3,4] } } );
 }

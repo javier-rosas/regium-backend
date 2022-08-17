@@ -19,16 +19,16 @@ export default class UsersController {
     }
   }
 
-  static async apiGetUserNfts(req, res, next) {
+  static async apiGetUser(req, res, next) {
     try {
       let userId = req.params.userId 
-      let nfts = await UsersDAO.getUserNfts(userId)
+      let user = await UsersDAO.getUser(userId)
 
-      if (!nfts) {
+      if (!user) {
         res.status(404).json( {error: "not found"} )
         return 
       }
-      res.json(nfts)
+      res.json(user)
     } catch (e) {
       console.log(`API, ${e}`)
       res.status(500).json( {error: e} )
