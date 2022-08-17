@@ -100,4 +100,40 @@ export default class NftsController {
       res.status(500).json({ error: e });
     }
   }
+
+  static async apiMintNft(req, res, next) {
+    try {
+      console.log(req.body.image);
+      const name = req.body.name;
+      const description = req.body.description;
+      const owner = "ds";
+      const upForSale = false;
+      const price = req.body.price;
+      const genre = "undefined";
+      const image = req.body.image;
+      const likes = 0;
+
+      const mintResponse = await NftsDAO.mintNft(
+        name,
+        description,
+        owner,
+        upForSale,
+        price,
+        genre,
+        image,
+        likes
+      );
+
+      let { error } = mintResponse;
+      console.log(error);
+
+      if (error) {
+        res.status(500).json({ error: "Unable to mint nft" });
+      } else {
+        res.json({ status: "success" });
+      }
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
 }

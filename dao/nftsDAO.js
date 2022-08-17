@@ -124,4 +124,33 @@ export default class NftsDAO {
       return { error: e };
     }
   }
+
+  static async mintNft(
+    name,
+    description,
+    owner,
+    upForSale,
+    price,
+    genre,
+    image,
+    likes
+  ) {
+    try {
+      const nftDoc = {
+        name: name,
+        description: description,
+        owner: owner,
+        upForSale: upForSale,
+        price: price,
+        genre: genre,
+        image: image,
+        likes: likes,
+      };
+      let res = await nfts.insertOne(nftDoc);
+      return res;
+    } catch (e) {
+      console.error(`Unable to mint nft (DAO): ${e}`);
+      return { error: e };
+    }
+  }
 }

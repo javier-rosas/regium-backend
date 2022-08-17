@@ -4,8 +4,7 @@ import ReviewsController from "./reviews.controller.js";
 import FavoritesController from "./favorites.controller.js";
 import UsersController from "./users.controller.js";
 
-
-const router = express.Router()
+const router = express.Router();
 
 router.route("/").get(NftsController.apiGetNfts);
 router.route("/id/:id").get(NftsController.apiGetNftById);
@@ -21,8 +20,9 @@ router.route("/review").delete(ReviewsController.apiDeleteReview);
 router.route("/favorites").put(FavoritesController.apiUpdateFavorites);
 router.route("/favorites/:userId").get(FavoritesController.apiGetFavorites);
 
-router.route("/user/:userId").get( UsersController.apiGetUserNfts )
-router.route("/user").put( UsersController.apiUpdateUser )
+router.route("/user/:userId").get(UsersController.apiGetUserNfts);
+router.route("/user").put(UsersController.apiUpdateUser);
 
+router.route("/mint").post(NftsController.apiMintNft);
 
-export default router
+export default router;
