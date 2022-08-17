@@ -103,10 +103,9 @@ export default class NftsController {
 
   static async apiMintNft(req, res, next) {
     try {
-      console.log(req.body.image);
       const name = req.body.name;
       const description = req.body.description;
-      const owner = "ds";
+      const owner = req.body.googleId;
       const upForSale = false;
       const price = req.body.price;
       const genre = "undefined";
@@ -125,10 +124,10 @@ export default class NftsController {
       );
 
       let { error } = mintResponse;
-      console.log(error);
 
       if (error) {
         res.status(500).json({ error: "Unable to mint nft" });
+        console.log(error);
       } else {
         res.json({ status: "success" });
       }

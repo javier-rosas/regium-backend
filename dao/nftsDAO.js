@@ -2,14 +2,15 @@ import mongodb from "mongodb";
 const objectId = mongodb.ObjectId;
 
 let nfts;
-
+let users;
 export default class NftsDAO {
   static async injectDB(conn) {
-    if (nfts) {
+    if (nfts || users) {
       return;
     }
     try {
       nfts = await conn.db(process.env.NFT_NS).collection("nfts");
+      users = await conn.db(process.env.NFT_NS).collection("users")
     } catch (e) {
       console.error(`Unable to connect in NftDAO: ${e}`);
     }
@@ -125,6 +126,19 @@ export default class NftsDAO {
     }
   }
 
+  static async addNftToOwnerArray(googleId, nftId) {
+    try {
+      let res = await users.updateOne(
+        { _id: googleId },
+        { $push: { nfts_owned: nftId } }
+     )
+     return res
+    } catch (e) {
+      console.error(`Unable to add NFT to owner array: ${e}`);
+      return { error: e };
+    }
+  } 
+
   static async mintNft(
     name,
     description,
@@ -147,10 +161,12 @@ export default class NftsDAO {
         likes: likes,
       };
       let res = await nfts.insertOne(nftDoc);
+      this.addNftToOwnerArray(nftDoc.owner, res.insertedId.toString())
       return res;
     } catch (e) {
       console.error(`Unable to mint nft (DAO): ${e}`);
       return { error: e };
     }
   }
+
 }

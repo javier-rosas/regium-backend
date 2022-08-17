@@ -35,9 +35,6 @@ export default class UsersController {
     }
   }
 
-
-
-
 }
 
 
