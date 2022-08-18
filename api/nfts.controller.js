@@ -135,4 +135,30 @@ export default class NftsController {
       res.status(500).json({ error: e.message });
     }
   }
+
+  static async apiSellNft(req, res, next) {
+    try {
+      const nftId = req.body.nftId
+      const price = req.body.price
+      const upForSale = true 
+      const sellResponse = await NftsDAO.sellNft(
+        nftId, 
+        price,
+        upForSale
+      )
+
+      let {error} = sellResponse
+
+      if (error) {
+        res.status(500).json({ error: "Unable to sell nft" });
+        console.log(error);
+      } else {
+        res.json({ status: "success" });
+      }
+      
+    } catch(e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
 }
+

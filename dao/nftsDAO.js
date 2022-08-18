@@ -169,4 +169,23 @@ export default class NftsDAO {
     }
   }
 
+  static async sellNft(nftId, price, upForSale) {
+    try {
+      const res = await nfts.updateOne(
+        { _id : new objectId(nftId) }, 
+        { $set : 
+          {
+            price: price,
+            upForSale : upForSale
+          } 
+        },
+        { upsert : true }
+      )
+      return res
+    } catch(e) {
+      console.error(`Unable to sell nft (DAO): ${e}`);
+      return { error: e };
+    }
+  }
+
 }
