@@ -85,6 +85,7 @@ Dhruv Sabharwal: sabharwal.d@northeastern.edu
 
 ![Alt text](./pictures/random_nft.png?raw=true "Title")
 
+
 # Iteration 2
 
 We made some changes to the frontend and the backend code. We also created a new github repository which contains the code that will run on the Internet Computer blockchain network. We call this repository Distributed Uniq: 
@@ -113,7 +114,81 @@ The above file shows the code for how we can mint a new nft
 ## Contributions
 
 Dhruv Sabharwal: Landing page styling, creating and setting up the new github Distributed Uniq repository, connecting the blockchain backend to the react frontend.
-Javier Rosas Ruiz: NFT card styling and functionality, Mint.jsx file, Nft.mo file
+Javier Rosas Ruiz: NFT card styling and functionality, Mint.jsx file, Nft.mo file, and optimized the web app for mobile using bootstrapped components and css.
 
-## Plan for iteration 3
-We aim to finish the web application with the Buy, Sell and Mint funcionality fully working on the Internet Computer Blockchain.
+# Iteration 3
+We finished the web application with the Buy, Sell and Mint funcionality fully working with a MongoDB backend. 
+
+## Frontend 
+
+### getUser function: Javier Rosas Ruiz 
+
+![Alt text](./pictures/get_user_frontend.png?raw=true "Title")
+
+### Confetti third party integration function: Javier Rosas Ruiz 
+
+![Alt text](./pictures/confetti.png?raw=true "Title")
+
+
+![Alt text](./pictures/confetti2.png?raw=true "Title")
+
+
+
+### Spinner third party integration function: Javier Rosas Ruiz 
+
+![Alt text](./pictures/spinner.png?raw=true "Title")
+
+
+### sellNft and buyNft frontend: Javier Rosas Ruiz 
+
+![Alt text](./pictures/sell_nft_buy_nft_frontend.png?raw=true "Title")
+
+
+![Alt text](./pictures/buy_panel.png?raw=true "Title")
+
+
+![Alt text](./pictures/sell_panel.png?raw=true "Title")
+
+# Backend 
+
+### modify balance backend: Javier Rosas Ruiz 
+
+![Alt text](./pictures/modify_balance.png?raw=true "Title")
+
+
+### modify owner nft array: Javier Rosas Ruiz 
+
+![Alt text](./pictures/modify_owner_nft_array.png?raw=true "Title")
+
+### check user balance: Javier Rosas Ruiz 
+
+![Alt text](./pictures/check_user_balance_backend.png?raw=true "Title")
+
+### sell_nft_backend : Javier Rosas Ruiz 
+
+![Alt text](./pictures/sell_nft_backend.png?raw=true "Title")
+
+### getUser: Javier Rosas Ruiz 
+
+![Alt text](./pictures/get_user_backend.png?raw=true "Title")
+
+### buyNft: Javier Rosas Ruiz 
+
+![Alt text](./pictures/buy_nft_backend.png?raw=true "Title")
+
+### mint functionality: Dhruv Sabharwal
+
+![Alt text](./pictures/mint_backend.png?raw=true "Title")
+
+
+
+
+
+
+
+
+
+
+
+
+
