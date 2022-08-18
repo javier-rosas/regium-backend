@@ -167,6 +167,7 @@ export default class NftsController {
       const userId = req.body.userId
       const buyResponse = await NftsDAO.buyNft(nftId, userId)
       
+      console.log(buyResponse)
       let {error} = buyResponse
 
       if (error) {
