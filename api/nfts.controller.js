@@ -147,8 +147,15 @@ export default class NftsController {
         upForSale
       )
 
-      let {error} = sellResponse
+  
+      if ('status' in sellResponse) {
+        if (sellResponse.status === "invalid balance or not up for sale"){
+          res.json({status: "invalid balance or not up for sale"})
+          return 
+        }
+      }
 
+      let {error} = sellResponse
       if (error) {
         res.status(500).json({ error: "Unable to sell nft" });
         console.log(error);

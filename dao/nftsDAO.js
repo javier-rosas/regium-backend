@@ -249,8 +249,8 @@ export default class NftsDAO {
       
       if ((balance > nft.price) && nft.upForSale) {
 
-        this.modifyBalance(nft.owner, true, nft.price )
-        this.modifyBalance(userId, false, nft.price )
+        this.modifyBalance(nft.owner, true, parseFloat(nft.price) )
+        this.modifyBalance(userId, false, parseFloat(nft.price) )
 
         const updateNft = await nfts.updateOne(
           { _id : new objectId(nftId) }, 
@@ -284,7 +284,7 @@ export default class NftsDAO {
         }
         return updateNft
       } else {
-        return {status: "not enough money or not on sale "}
+        return {status: "invalid balance or not up for sale"}
       }
 
       
