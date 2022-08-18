@@ -29,6 +29,7 @@ export default class UsersController {
         return 
       }
       res.json(user)
+      
     } catch (e) {
       console.log(`API, ${e}`)
       res.status(500).json( {error: e} )
