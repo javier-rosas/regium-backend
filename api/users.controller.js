@@ -6,6 +6,7 @@ export default class UsersController {
     try {
       const userData = req.body
       const userResponse = await UsersDAO.updateUser(userData)
+      
       let {error} = userResponse
 
       if (error) {

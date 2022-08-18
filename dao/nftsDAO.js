@@ -224,7 +224,6 @@ export default class NftsDAO {
   }
 
   static async checkUserBalance(userId) {
-    console.log("userId", userId)
     let cursor
     try {
       cursor = await users.find({ _id : userId }, { projection: { _id: 0, balance: 1 } })
@@ -238,15 +237,14 @@ export default class NftsDAO {
 
 
   static async buyNft(nftId, userId) {
-    
+    let cursor
     try {
-      let balance = await this.checkUserBalance(userId)
-      console.log("balance", balance)
+      cursor = await this.checkUserBalance(userId)
       const nft = await this.getNftById(nftId)
-      balance = balance[0].balance
+      console.log("cursor", cursor)
+      let balance = cursor[0].balance
 
-
-      
+    
       if ((balance > nft.price) && nft.upForSale) {
 
         this.modifyBalance(nft.owner, true, parseFloat(nft.price) )
@@ -278,7 +276,6 @@ export default class NftsDAO {
         
 
         if (!updateNft.modifiedCount && !updateNft.upsertedCount) {
-          console.log(updateNft)
           console.error(`NFT could not be bought` )
           return 
         }

@@ -47,7 +47,7 @@ export default class UsersDAO {
     try {
       cursor = await userDB.find({ _id : userId })//, { projection: { _id: 0, nfts_owned: 1 } })
       const user = await cursor.toArray()
-      return user
+      return user[0]
     } catch (e) {
       console.error(`Something went wrong in getUserNfts: ${e}`)
       throw e
