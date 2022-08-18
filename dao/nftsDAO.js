@@ -126,15 +126,50 @@ export default class NftsDAO {
     }
   }
 
-  static async addNftToOwnerArray(googleId, nftId) {
+  static async modifyOwnerNftArray(googleId, nftId, isPush) {
+    
     try {
-      let res = await users.updateOne(
-        { _id: googleId },
-        { $push: { nfts_owned: nftId } }
-     )
+      let res
+      if (isPush) {
+        res = await users.updateOne(
+          { _id: googleId },
+          { $push: { nfts_owned: nftId.toString() } },
+          { upsert : true }
+       )
+      } else {
+        res = await users.updateOne(
+          { _id: googleId },
+          { $pull: { nfts_owned: nftId.toString() } },
+          { upsert : true }
+       )
+      }
      return res
     } catch (e) {
-      console.error(`Unable to add NFT to owner array: ${e}`);
+      console.error(`Unable to modify owner array: ${e}`);
+      return { error: e };
+    }
+  } 
+
+  static async modifyBalance(googleId, increment, amount) {
+    
+    try {
+      let res
+      if (increment) {
+        res = await users.updateOne(
+          { _id: googleId },
+          { $inc : {balance : amount}},
+          { upsert : true }
+       )
+      } else {
+        res = await users.updateOne(
+          { _id: googleId },
+          { $inc : {balance : -amount}},
+          { upsert : true }
+       )
+      }
+     return res
+    } catch (e) {
+      console.error(`Unable to modify balance: ${e}`);
       return { error: e };
     }
   } 
@@ -161,7 +196,7 @@ export default class NftsDAO {
         likes: likes,
       };
       let res = await nfts.insertOne(nftDoc);
-      this.addNftToOwnerArray(nftDoc.owner, res.insertedId.toString())
+      this.modifyOwnerNftArray(nftDoc.owner, res.insertedId.toString(), true)
       return res;
     } catch (e) {
       console.error(`Unable to mint nft (DAO): ${e}`);
@@ -185,6 +220,73 @@ export default class NftsDAO {
     } catch(e) {
       console.error(`Unable to sell nft (DAO): ${e}`);
       return { error: e };
+    }
+  }
+
+  static async checkUserBalance(userId) {
+    let cursor
+    try {
+      cursor = await users.find({ _id : userId }, { projection: { _id: 0, balance: 1 } })
+      const balance = await cursor.toArray()
+      return balance
+    } catch(e) {
+      console.log(e)
+      throw e
+    }
+  }
+
+
+  static async buyNft(nftId, userId) {
+    
+    try {
+      let balance = await this.checkUserBalance(userId)
+      const nft = await this.getNftById(nftId)
+      balance = balance[0].balance
+
+
+      
+      if (balance > nft.price && nft.upForSale) {
+
+        this.modifyBalance(nft.owner, true, nft.price )
+        this.modifyBalance(userId, false, nft.price )
+
+        const updateNft = await nfts.updateOne(
+          { _id : new objectId(nftId) }, 
+          { $set : 
+            {
+              price: null,
+              upForSale: false,
+              owner: userId,
+              lastBought: Date.now(),
+            } 
+          },
+          { upsert : true }
+        )
+
+        nfts.updateOne(
+          { _id : new objectId(nftId) }, 
+          { $inc : {numTransactions : 1}},
+          { upsert : true }
+        )
+        
+        console.log("updateNFT nftsDAO js", updateNft)
+        
+        this.modifyOwnerNftArray(nft.owner, nft._id, false)
+        this.modifyOwnerNftArray(userId, nft._id, true)
+        
+
+        if (!updateNft.modifiedCount && !updateNft.upsertedCount) {
+          console.log(updateNft)
+          console.error(`NFT could not be bought` )
+          return 
+        }
+        return updateNft
+      }
+
+      
+    } catch(e) {
+      console.log(e)
+      throw e
     }
   }
 

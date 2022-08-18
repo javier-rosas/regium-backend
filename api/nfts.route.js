@@ -27,5 +27,7 @@ router.route("/user").put(UsersController.apiUpdateUser);
 router.route("/mint").post(NftsController.apiMintNft);
 
 router.route("/sell").put(NftsController.apiSellNft);
+router.route("/buy").put(NftsController.apiBuyNft);
+
 
 export default router;
