@@ -252,7 +252,6 @@ export default class NftsDAO {
           { _id: new objectId(nftId) },
           {
             $set: {
-              price: null,
               upForSale: false,
               owner: userId,
               lastBought: Date.now(),
