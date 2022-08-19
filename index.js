@@ -5,8 +5,6 @@ import NftsDAO from "./dao/nftsDAO.js";
 import ReviewsDAO from "./dao/reviewsDAO.js";
 import FavoritesDAO from "./dao/favoritesDAO.js";
 import UsersDAO from "./dao/usersDAO.js";
-import express from "express";
-// import bodyParser from "body-parser";
 
 async function main() {
   dotenv.config();
@@ -14,12 +12,6 @@ async function main() {
   const client = new mongodb.MongoClient(process.env.NFTS_DB_URI);
 
   const port = process.env.PORT || 8000;
-
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.text({ limit: "50mb" }));
-  app.use(
-    express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 })
-  );
 
   try {
     // connect to the mongodb server
