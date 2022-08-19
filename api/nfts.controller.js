@@ -108,8 +108,8 @@ export default class NftsController {
       const owner = req.body.googleId;
       const upForSale = false;
       const price = req.body.price;
-      const genre = "undefined";
-      const image = req.body.image;
+      const genre = "newly minted";
+      const imageLink = req.body.imageLink;
       const likes = 0;
 
       const mintResponse = await NftsDAO.mintNft(
@@ -119,7 +119,7 @@ export default class NftsController {
         upForSale,
         price,
         genre,
-        image,
+        imageLink,
         likes
       );
 
@@ -138,55 +138,47 @@ export default class NftsController {
 
   static async apiSellNft(req, res, next) {
     try {
-      const nftId = req.body.nftId
-      const price = req.body.price
-      const upForSale = true 
-      const sellResponse = await NftsDAO.sellNft(
-        nftId, 
-        price,
-        upForSale
-      )
+      const nftId = req.body.nftId;
+      const price = req.body.price;
+      const upForSale = true;
+      const sellResponse = await NftsDAO.sellNft(nftId, price, upForSale);
 
-  
-      if ('status' in sellResponse) {
-        if (sellResponse.status === "invalid balance or not up for sale"){
-          res.json({status: "invalid balance or not up for sale"})
-          return 
+      if ("status" in sellResponse) {
+        if (sellResponse.status === "invalid balance or not up for sale") {
+          res.json({ status: "invalid balance or not up for sale" });
+          return;
         }
       }
 
-      let {error} = sellResponse
+      let { error } = sellResponse;
       if (error) {
         res.status(500).json({ error: "Unable to sell nft" });
         console.log(error);
       } else {
         res.json({ status: "success" });
       }
-      
-    } catch(e) {
+    } catch (e) {
       res.status(500).json({ error: e.message });
     }
   }
 
   static async apiBuyNft(req, res, next) {
     try {
-      const nftId = req.body.nftId
-      const userId = req.body.userId
-      const buyResponse = await NftsDAO.buyNft(nftId, userId)
-      
-      console.log(buyResponse)
-      let {error} = buyResponse
+      const nftId = req.body.nftId;
+      const userId = req.body.userId;
+      const buyResponse = await NftsDAO.buyNft(nftId, userId);
+
+      console.log(buyResponse);
+      let { error } = buyResponse;
 
       if (error) {
         res.status(500).json({ error: "Unable to sell nft" });
         console.log(error);
-      } else{
+      } else {
         res.json({ status: "success" });
       }
-      
-    } catch(e) {
+    } catch (e) {
       res.status(500).json({ error: e.message });
     }
   }
 }
-

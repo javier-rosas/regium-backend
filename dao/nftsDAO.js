@@ -179,7 +179,7 @@ export default class NftsDAO {
     upForSale,
     price,
     genre,
-    image,
+    imageLink,
     likes
   ) {
     try {
@@ -190,7 +190,7 @@ export default class NftsDAO {
         upForSale: upForSale,
         price: price,
         genre: genre,
-        image: image,
+        imageLink: imageLink,
         likes: likes,
       };
       let res = await nfts.insertOne(nftDoc);
