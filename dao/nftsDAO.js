@@ -242,8 +242,8 @@ export default class NftsDAO {
       cursor = await this.checkUserBalance(userId);
       const nft = await this.getNftById(nftId);
       console.log("cursor", cursor);
-      let balance = cursor[0].balance;
-
+      let balance
+      if (cursor.length > 0) balance = cursor[0].balance;
       if (balance > nft.price && nft.upForSale) {
         this.modifyBalance(nft.owner, true, parseFloat(nft.price));
         this.modifyBalance(userId, false, parseFloat(nft.price));
